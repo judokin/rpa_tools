@@ -112,6 +112,7 @@ def reset_main_pdf_v2(input_pdf):
     # 关闭文档
     doc.close()
     new_doc.close()
+    fp.close()
     print(f"新文件已保存为: {output_pdf}")
     print(f"删除旧的pdf", input_pdf)
     if config.remove_file:
