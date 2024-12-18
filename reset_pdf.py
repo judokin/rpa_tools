@@ -15,6 +15,9 @@ import traceback
 def reset_main_pdf_v2(input_pdf):
     fp = open(input_pdf, 'rb')
     output_pdf = input_pdf.replace("_temp.pdf", ".pdf")
+    output_excel = input_pdf.replace("_temp.pdf", "_part_1.xlsx")
+
+
     manager = PDFResourceManager()
     laparams = LAParams()
     dev = PDFPageAggregator(manager, laparams=laparams)
@@ -118,6 +121,9 @@ def reset_main_pdf_v2(input_pdf):
     if config.remove_file:
         try:
             os.remove(input_pdf)
+            # 运行失败时清理没用的excel
+            if os.path.exists(output_excel):
+                os.remove(output_excel)
         except:
             pass
 def set_main_pdf(input_pdf):
@@ -228,24 +234,27 @@ if __name__ == '__main__':
     for d in os.listdir(save_path):
         if d != 'test' and config.test_mode:
             continue
-        for header_dir in os.listdir(save_path + "\\" + d):
-            path = save_path + "\\" + d + "\\" + header_dir
-            #print(path)
-            if not os.path.isdir(path):
+        for code in os.listdir(save_path + "\\" + d):
+            path = save_path + "\\" + d + "\\" + code
+            if code.find("FBA") != 0:
                 continue
-            for all_file in os.listdir(path):
-                if all_file.endswith("temp.pdf"):
-                    try:
-                        reset_main_pdf_v2(path + "\\" + all_file)
-                    except Exception as e:
-                        traceback.print_exc()
-                        pass
-            if not os.path.exists(path + "\\商品标签"):
-                continue
-            for sku_pdf in os.listdir(path + "\\商品标签\\"):
-                if sku_pdf.endswith("temp.pdf"):
-                    try:
-                        set_sku_pdf(path + "\\商品标签\\" + sku_pdf)
-                    except Exception as e:
-                        traceback.print_exc()
-                        pass
+            for header_dir in os.listdir(path):
+                header_path = path + "\\" + header_dir
+                for header_file in os.listdir(header_path):
+                    if header_file.endswith("temp.pdf"):
+                        try:
+                            #print(header_path + "\\" + header_file)
+                            reset_main_pdf_v2(header_path + "\\" + header_file)
+                        except Exception as e:
+                            traceback.print_exc()
+                    if not os.path.exists(header_path + "\\商品标签"):
+                        continue
+                    for sku_pdf in os.listdir(header_path + "\\商品标签\\"):
+                        if sku_pdf.endswith("temp.pdf"):
+                            try:
+                                pass
+                                set_sku_pdf(header_path + "\\商品标签\\" + sku_pdf)
+                                #print(header_path + "\\商品标签\\" + sku_pdf)
+                            except Exception as e:
+                                traceback.print_exc()
+                                pass
