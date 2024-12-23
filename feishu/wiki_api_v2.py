@@ -1,16 +1,13 @@
 
 import requests
 
-# cli_a7d537a861a1d00e
-
-# WPFHqIYtyVbRRifSA0Hl6f4YMtJzwVoB
 
 import json
 url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
 
 payload = json.dumps({
-  "app_id": "cli_a7d537a861a1d00e",
-  "app_secret": "WPFHqIYtyVbRRifSA0Hl6f4YMtJzwVoB"
+  "app_id": "",
+  "app_secret": ""
 })
 headers = {
   'Content-Type': 'application/json'
