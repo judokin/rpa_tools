@@ -285,12 +285,12 @@ if __name__ == '__main__':
                                 pass
             if not os.path.exists(path + ".zip"):
                 compress_folder_to_zip(path)
-            from feishu.feishu_uplaod import upload_file
-            res_text = upload_file(path + ".zip")
-            try:
-                upload_res = json.loads(res_text)
-                if upload_res['msg'] == "Success":
-                    message = path + ".zip上传成功"
-                    send_message(message)
-            except:
-                send_message(path + ".zip上传失败:" + res_text)
+                from feishu.feishu_uplaod import upload_file
+                res_text = upload_file(path + ".zip")
+                try:
+                    upload_res = json.loads(res_text)
+                    if upload_res['msg'] == "Success":
+                        message = path + ".zip上传成功"
+                        send_message(message)
+                except:
+                    send_message(path + ".zip上传失败:" + res_text)
