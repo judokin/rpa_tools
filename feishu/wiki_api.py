@@ -1,9 +1,6 @@
 
 import requests
 
-# cli_a7d537a861a1d00e
-
-# WPFHqIYtyVbRRifSA0Hl6f4YMtJzwVoB
 
 import json
 import config
