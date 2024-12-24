@@ -8,8 +8,12 @@ from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.converter import PDFPageAggregator
 #import fitz  # PyMuPDF
 import os
-import config
+if os.path.exists("dev_config.py"):
+    import dev_config as config
+else:
+    import config
 import traceback
+from feishu.send import send_message
 #Imports Searchable PDFs and prints x,y coordinates
 
 def reset_main_pdf_v2(input_pdf):
@@ -281,3 +285,12 @@ if __name__ == '__main__':
                                 pass
             if not os.path.exists(path + ".zip"):
                 compress_folder_to_zip(path)
+            from feishu.feishu_uplaod import upload_file
+            res_text = upload_file(path + ".zip")
+            try:
+                upload_res = json.loads(res_text)
+                if upload_res['msg'] == "Success":
+                    message = path + ".zip上传成功"
+                    send_message(message)
+            except:
+                send_message(path + ".zip上传失败:" + res_text)

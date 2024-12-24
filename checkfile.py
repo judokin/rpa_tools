@@ -8,7 +8,7 @@ class MyHandler(FileSystemEventHandler):
     #     print(f"文件被修改: {event.src_path}")
 
     def on_created(self, event):
-        os.system(f'python D:\\reset_pdf.py')
+        os.system(f'python D:\\rpa_tools\\reset_pdf.py')
 
     # def on_deleted(self, event):
     #     print(f"文件被删除: {event.src_path}")

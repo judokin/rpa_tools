@@ -1,7 +1,7 @@
-destination_y0 = 1
-destination_y1 = 1
-address_y0     = 2
+destination_y0 = 0
+destination_y1 = 0
+address_y0     = 0.5
 address_y1     = 0
-sku_y0         = 2
-remove_file    = False
+sku_y0         = 0
+remove_file    = True
 test_mode      = False

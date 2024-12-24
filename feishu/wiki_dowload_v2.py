@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(prog = 'myprogram')
 parser.add_argument('--update_tenant_access_token', help='update tenant_access_token', type=str)
 update_tenant_access_token = parser.parse_args().update_tenant_access_token
 #print("update_tenant_access_token", update_tenant_access_token)
-if update_tenant_access_token.lower() == 'true':
+if update_tenant_access_token == 'true':
     update_tenant_access_token = True
 else:
     update_tenant_access_token = False
@@ -32,7 +32,7 @@ def is_file_updated_recently(file_path, threshold_hours=1.5):
         print(f"文件 {file_path} 不存在！")
         return False
 # 如果文件存在，并且更新时间超过一小时，则重新获取token
-if not is_file_updated_recently("tenant_access_token") and not update_tenant_access_token:
+if is_file_updated_recently("tenant_access_token") and not update_tenant_access_token:
     with open('tenant_access_token') as f:
         tenant_access_token = f.read().strip()
 else:
@@ -61,14 +61,19 @@ headers = {
 # 创建导出任务
 url = "https://open.feishu.cn/open-apis/drive/v1/export_tasks"
 payload = json.dumps({
-	"file_extension": "xlsx",
-	"token": "RSf3bhBf4aVyNKsNVpicxZD4nBg",
-	"type": "bitable"
+  "file_extension": "xlsx",
+  "token": "LXp3sBD89hoVD9tqNIZchNlNnQf",
+  "type": "sheet"
 })
 
 
 response = requests.request("POST", url, headers=headers, data=payload)
 res_json = response.json()
+try:
+    print("ticket", res_json['data']['ticket'])
+except:
+    print(res_json)
+    import pdb;pdb.set_trace()
 print("ticket", res_json['data']['ticket'])
 # 查看导出任务状态
 
@@ -100,11 +105,12 @@ response = requests.get(url, headers=headers, stream=True)
 if response.status_code == 200:
     # 将文件保存到本地
     time_str = time.strftime("%Y%m%d%H%M%S", time.localtime())
-    file_name = f"d://data//{file_name}_{time_str}.xlsx"  # 替换为期望的文件名
+    file_name = f"d://config//{file_name}_{time_str}.xlsx"  # 替换为期望的文件名
     with open(file_name, "wb") as file:
         for chunk in response.iter_content(chunk_size=8192):
             if chunk:  # 过滤掉保持活动的空块
                 file.write(chunk)
     print(f"文件已成功保存为: {file_name}")
+    
 else:
     print(f"下载失败，状态码: {response.status_code}，响应: {response.text}")
