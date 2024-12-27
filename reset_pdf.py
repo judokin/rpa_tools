@@ -262,6 +262,8 @@ if __name__ == '__main__':
             path = save_path + "\\" + d + "\\" + code
             if code.find("FBA") != 0 or code.endswith(".zip"):
                 continue
+            if not os.path.isdir(path):
+                continue
             print(path)
             for header_dir in os.listdir(path):
                 header_path = path + "\\" + header_dir
