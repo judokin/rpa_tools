@@ -1,2 +1,4 @@
 feishu\config.py
 feishu/config.py
+dev_config.py
+.\feishu\config.py
