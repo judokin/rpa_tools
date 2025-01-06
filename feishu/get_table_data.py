@@ -34,7 +34,7 @@ url = "https://open.feishu.cn/open-apis/bitable/v1/apps/NZk0b8qpPaHCAgsslNscShbp
 
 # 定义请求头
 headers = {
-    "Authorization": "Bearer u-d3nx2rlzlat8Y.3UQFv3Togln0bR0kvHqW20llW8a7Md",
+    "Authorization": "Bearer " + tenant_access_token,
     "Content-Type": "application/json"
 }
 
@@ -54,7 +54,7 @@ print("\n\n\n\n\n\n\n")
 headers = {
   'Authorization': 'Bearer ' + tenant_access_token
 }
-url = "https://open.feishu.cn/open-apis/drive/v1/medias/U1FCbmYFNofR5uxtoqmcRlgSnDc/download?extra=%7B%22bitablePerm%22%3A%7B%22tableId%22%3A%22tblux7wXHLPNgroJ%22%2C%22rev%22%3A3%7D%7D"
+url = "https://open.feishu.cn/open-apis/drive/v1/medias/batch_get_tmp_download_url?file_tokens=FM5ebnCXJo36FLx9ii4cMrsKn9c&extra=%7B%22bitablePerm%22%3A%7B%22tableId%22%3A%22tblux7wXHLPNgroJ%22%2C%22rev%22%3A3%7D%7D"
 #response = requests.request("GET", url, headers=headers, data=payload)
 response = requests.get(url, headers=headers, stream=True)
 
