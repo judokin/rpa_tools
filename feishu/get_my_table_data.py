@@ -52,8 +52,12 @@ def reset_fields(data, record_id):
 if __name__ == '__main__':
     pass
     response_json = get_table_data()
+    acount_dict = {}
+    count_dict = {}
     for item in response_json['data']['items']:
         if len(item['fields'].keys()) == 0:
+            continue
+        if '状态' in item['fields'] and item['fields']['状态'] == '已完成':
             continue
         if '状态' in item['fields'] and item['fields']['状态'] == '进行中':
             data = {
@@ -71,6 +75,23 @@ if __name__ == '__main__':
                 }
             }
             #reset_fields(data, item['record_id'])
-        print(item['fields'], item['record_id'])
-        import pdb;pdb.set_trace()
-        pass
+        fields = item['fields']
+        fields['record_id'] = item['record_id']
+        ac = fields['店铺'].split('-')[0]
+        country = fields['店铺'].split('-')[1]
+        if ac not in acount_dict:
+            acount_dict[ac] = {}
+        if country not in acount_dict[ac]:
+            acount_dict[ac][country] = []
+        acount_dict[ac][country].append(fields)
+        if ac+"-"+country not in count_dict:
+            count_dict[ac+"-"+country] = 0
+        count_dict[ac+"-"+country] += 1
+    # 取数量最多的key
+    count_dict = dict(sorted(count_dict.items(), key=lambda item: item[1], reverse=True))
+    max_key = list(count_dict.keys())[0]
+    fbacode_list = acount_dict[max_key.split('-')[0]][max_key.split('-')[1]]
+    open("d:\\rpa_tools\\rpa_config\\fbacode_list.json", "w", encoding='utf8').write(json.dumps(fbacode_list, ensure_ascii=False))
+    json.loads(open("D:\\rpa_tools\\rpa_config\\fbacode_list.json","r", encoding="utf8").read())
+    import pdb;pdb.set_trace()
+    pass
