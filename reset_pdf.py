@@ -91,6 +91,8 @@ def reset_main_pdf_v2(input_pdf):
         # 获取每页的文本块
         blocks = page.get_text("blocks")
         # 定义横向缩放矩阵
+        # 目的地,y1坐标
+        mdd_y1 = 0
         for i, block in enumerate(blocks):
             # 获取文本块的坐标和内容
             x0, y0, x1, y1, text, _, _ = block
@@ -101,6 +103,8 @@ def reset_main_pdf_v2(input_pdf):
                 x0 += regions[2][0] - regions[0][0] + config.destination_y1
                 y1 = y0 + (regions[1][1] - regions[-1][1])+1
                 #print(f"{x0}, {y0}, {x1}, {y1}")
+                #print("目的地,y1", y1)
+                mdd_y1 = y1
                 # 绘制白色矩形覆盖原文本
                 new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
                 #new_page.draw_rect([x0, y0, x1, y1], color=(0, 0, 0), fill=(0, 0, 0))
@@ -108,7 +112,11 @@ def reset_main_pdf_v2(input_pdf):
                 regions = rg_data_1[i][0]
                 regions_dict = rg_data_1[i][1]
                 y0 += regions[0][1] - regions[1][1] + config.address_y0
-                y1 = y0 + (regions[1][1] - regions[-1][1]) + config.address_y1
+                if input_pdf.find("岚风") > -1:
+                    y1 = mdd_y1-1
+                else:
+                    y1 = y0 + (regions[1][1] - regions[-1][1]) + config.address_y1
+                #print("发货地,y1", y1, mdd_y1)
                 # 在该文本区域绘制一个黑色矩形覆盖
                 #new_page.draw_rect([x0, y0, x1, y1], color=(0, 0, 0), fill=(0, 0, 0))
                 new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
@@ -249,6 +257,9 @@ def compress_folder_to_zip(folder_path):
     
     print(f"压缩完成: {zip_file_path}")
 if __name__ == '__main__':
+    #test_path = r"C:\Users\Administrator\Desktop\Super Browser\亚马逊--岚风（子账号）\FBA18RMFV90D\1.21岚风店-WLF24047-136箱标准件-慢船-LGB8-夏欣怡\\1.21岚风店-WLF24047-136箱标准件-慢船-LGB8-夏欣怡_temp.pdf"
+    #reset_main_pdf_v2(test_path)
+    #import pdb;pdb.set_trace()
     config_path = "D:\\rpa.txt"
     with open(config_path, 'r', encoding='utf-8') as file:
         html_content = file.read()
