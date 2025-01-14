@@ -120,9 +120,9 @@ def get_table_data():
             download_file(file_name, items['fields']['视频'][0]['url'])
         if '能否发布' in items['fields'] and items['fields']['能否发布'] == True:
             continue
-        print(file_name, items['fields'])
         items['datetime'] = str(date_ranges[len(update_datas_list)])
         items['file_name'] = file_name
+        print(file_name, items)
         update_datas_list.append(items)
         # 只限10个视频
         if len(update_datas_list) == len(date_ranges):
