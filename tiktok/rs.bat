@@ -1,0 +1,1 @@
+python D:\rpa_tools\tiktok\reset_tk_fields.py

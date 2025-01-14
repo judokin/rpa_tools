@@ -58,7 +58,7 @@ def date_range():
     now = datetime.datetime.now()
     # 获取当前时间后面10个整点时间
     next_10_hours = [
-        (now + datetime.timedelta(hours=i+4)).replace(minute=0, second=0, microsecond=0)
+        (now + datetime.timedelta(hours=i)).replace(minute=0, second=0, microsecond=0)
         for i in range(1, 11)
     ]
     # 输出结果

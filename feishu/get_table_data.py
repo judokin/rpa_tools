@@ -52,8 +52,22 @@ def reset_fields(data, record_id):
     print(response.status_code)
     print(response.json())
 
+def date_range():
+    import datetime
+    # 获取当前时间
+    now = datetime.datetime.now()
+    # 获取当前时间后面10个整点时间
+    next_10_hours = [
+        (now + datetime.timedelta(hours=i+4)).replace(minute=0, second=0, microsecond=0)
+        for i in range(1, 11)
+    ]
+    # 输出结果
+    for dt in next_10_hours:
+        print(dt)
+    return next_10_hours
 def get_table_data():
-        # 查询多维表格数据
+    date_ranges = date_range()
+    # 查询多维表格数据
     url = "https://open.feishu.cn/open-apis/bitable/v1/apps/NZk0b8qpPaHCAgsslNscShbpnsg/tables/tblux7wXHLPNgroJ/records/search?page_size=999"
 
     # 定义请求头
@@ -98,16 +112,21 @@ def get_table_data():
             break_times += 1
             if break_times >= 1:
                 break
-        print(date_dir)
         folder_path = f"d://tk_video//{date_dir}//"
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
         file_name = folder_path + items['fields']['视频'][0]['name']
         if not os.path.exists(file_name):
             download_file(file_name, items['fields']['视频'][0]['url'])
-        if '能否发布' in items and items['fields']['能否发布'] == True:
+        if '能否发布' in items['fields'] and items['fields']['能否发布'] == True:
             continue
+        print(file_name, items['fields'])
+        items['datetime'] = str(date_ranges[len(update_datas_list)])
+        items['file_name'] = file_name
         update_datas_list.append(items)
+        # 只限10个视频
+        if len(update_datas_list) == len(date_ranges):
+            break
         #import pdb;pdb.set_trace()
         pass
     open("d:\\tk_video\\update_datas_list.json","w").write(json.dumps(update_datas_list,indent=4).encode().decode("utf8"))
@@ -115,10 +134,3 @@ def get_table_data():
 
 if __name__ == "__main__":
     get_table_data()
-    import pdb;pdb.set_trace()
-    print("\n\n\n\n\n\n\n")
-
-
-    #print(response.text)
-    import pdb;pdb.set_trace()
-    pass
