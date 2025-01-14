@@ -1,0 +1,9 @@
+https://www.rust-lang.org/tools/install
+下载rust安装
+python用3.11.6版的
+pip install dbt-core
+pip install dbt-postgres
+pip install psycopg2-binary
+
+dbt debug查看是不是有报错
+dbt seed
