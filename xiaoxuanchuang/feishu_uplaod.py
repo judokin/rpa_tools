@@ -2,9 +2,9 @@ import json
 # import feishu.config as fsconfig
 import requests
 import os
-
+import datetime
 import importlib.util
-
+from messange import send
 # 指定文件路径
 config_file_path = r"D:\rpa_tools\feishu\config.py"
 
@@ -104,3 +104,5 @@ if __name__ == "__main__":
         "type": "sheet"
     }
     import_tasks_by_data(data)
+    datetime_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    send(f"库存表格上传完成, 上传时间为：{datetime_str}")

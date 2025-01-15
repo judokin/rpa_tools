@@ -2,6 +2,7 @@ import requests
 import json
 import datetime
 import pandas as pd
+from messange import send
 base_url = "http://122.224.27.106:5190"
 res = requests.get(base_url + "/luyao/gettoken?id=luyao&code=d0d4e4f9870fb6b476e3d0f4e68f076a")
 res_json = res.json()
@@ -57,6 +58,7 @@ def get_table_data():
         pass
         #print("Response Text:", response.text)
     return data_json
+
 if __name__ == "__main__":
     data = {}
     res_json = post_info_by_data(data)
@@ -64,42 +66,45 @@ if __name__ == "__main__":
     df_filtered = df[df["更新时间"].notna()]
     datetime_str = datetime.datetime.now().strftime("%Y-%m-%d")
     df_filtered.to_excel(f"./库存_{datetime_str}.xlsx", index=False)
-    while True:
-        res_json = get_table_data()
-        #要删除的数据
-        delete_datas = {
-            "records": []
-        }
-        for item in res_json["data"]["items"]:
-            print(item["record_id"])
-            delete_datas['records'].append(item["record_id"])
-        if len(delete_datas['records']) == 0:
-            print('开始删除完成')
-            break
-        elif len(delete_datas['records']) > 0:
-            print('开始删除,数据量为：', len(delete_datas['records']))
-        delete_all_fields(delete_datas)
-    datas = {
-        "records": [
-            # {
-            #     "fields": {
-            #         "PID": "文本内容2"
-            #     }
-            # },
-            #             {
-            #     "fields": {
-            #         "PID": "文本内容3"
-            #     }
-            # }
-        ]
-    }
-    df_filtered['录入时间'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    for index, row in df_filtered.iterrows():
-        fields = {}
-        for col in df_filtered.columns:
-            if isinstance(row[col], str):
-                fields[col] = row[col].replace("\n", "").strip()
-            else:
-                fields[col] = row[col]
-        datas['records'].append({'fields': fields})
-    add_fields(datas)
+    df_filtered.to_excel(f"./库存.xlsx", index=False)
+    datetime_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    send(f"库存更新完成, 更新时间为：{datetime_str}")
+    # while True:
+    #     res_json = get_table_data()
+    #     #要删除的数据
+    #     delete_datas = {
+    #         "records": []
+    #     }
+    #     for item in res_json["data"]["items"]:
+    #         print(item["record_id"])
+    #         delete_datas['records'].append(item["record_id"])
+    #     if len(delete_datas['records']) == 0:
+    #         print('开始删除完成')
+    #         break
+    #     elif len(delete_datas['records']) > 0:
+    #         print('开始删除,数据量为：', len(delete_datas['records']))
+    #     delete_all_fields(delete_datas)
+    # datas = {
+    #     "records": [
+    #         # {
+    #         #     "fields": {
+    #         #         "PID": "文本内容2"
+    #         #     }
+    #         # },
+    #         #             {
+    #         #     "fields": {
+    #         #         "PID": "文本内容3"
+    #         #     }
+    #         # }
+    #     ]
+    # }
+    # df_filtered['录入时间'] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # for index, row in df_filtered.iterrows():
+    #     fields = {}
+    #     for col in df_filtered.columns:
+    #         if isinstance(row[col], str):
+    #             fields[col] = row[col].replace("\n", "").strip()
+    #         else:
+    #             fields[col] = row[col]
+    #     datas['records'].append({'fields': fields})
+    # add_fields(datas)
