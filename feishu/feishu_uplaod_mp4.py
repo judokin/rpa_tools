@@ -67,10 +67,6 @@ if __name__ == "__main__":
     if dest_folder in folder_list:
         print(f'folder {dest_folder} already exists')
         sys.exit(0)
-    data = {
-        "name": dest_folder,
-        "folder_token": "NG6mfLFkNl831dd3m4lcjHRQnig"
-    }
     create_folder(dest_folder, "NG6mfLFkNl831dd3m4lcjHRQnig")
     res_json = get_file_list("NG6mfLFkNl831dd3m4lcjHRQnig")
     folder_id = ''
