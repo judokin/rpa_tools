@@ -3,3 +3,4 @@ feishu/config.py
 dev_config.py
 .\feishu\config.py
 xiaoxuanchuang/*.xlsx
+deepseek/*.ini
