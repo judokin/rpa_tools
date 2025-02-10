@@ -58,6 +58,15 @@ def get_table_data():
         pass
         #print("Response Text:", response.text)
     return data_json
+def join_excel():
+    sdd = pd.read_excel("./库存.xlsx")
+    prd = pd.read_excel("./商品.xlsx")
+    sdd_v2 = sdd.merge(prd, on='品名', how='left').fillna('')
+    sdd_v2.rename(columns={'PID_x': 'PID'}, inplace=True)
+    sdd_v2.drop(columns=['PID_y'], inplace=True)
+    columns_to_keep = ['PID', 'SKU', '颜色', '工艺', '在制数', '待包装', '库存', '待发数', '未发数总计', '更新日期']
+    sdd_v2 = sdd_v2[columns_to_keep]
+    sdd_v2.to_excel(f"./库存.xlsx", index=False)
 
 if __name__ == "__main__":
     data = {}
@@ -67,7 +76,13 @@ if __name__ == "__main__":
     datetime_str = datetime.datetime.now().strftime("%Y-%m-%d")
     df_filtered.to_excel(f"./库存_{datetime_str}.xlsx", index=False)
     df_filtered.to_excel(f"./库存.xlsx", index=False)
+    res_json = post_info_by_data(data, 'getlist')
+    df = pd.DataFrame(res_json["data"])
+    datetime_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    df.to_excel(f"./商品_{datetime_str}.xlsx", index=False)
+    df.to_excel(f"./商品.xlsx", index=False)
     datetime_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    join_excel()
     send(f"库存更新完成, 更新时间为：{datetime_str}")
     # while True:
     #     res_json = get_table_data()
