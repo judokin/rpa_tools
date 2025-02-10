@@ -61,12 +61,15 @@ def get_table_data():
 def join_excel():
     sdd = pd.read_excel("./库存.xlsx")
     prd = pd.read_excel("./商品.xlsx")
-    sdd_v2 = sdd.merge(prd, on='品名', how='left').fillna('')
-    sdd_v2.rename(columns={'PID_x': 'PID'}, inplace=True)
-    sdd_v2.drop(columns=['PID_y'], inplace=True)
+    #prd.rename(columns={'PID': 'PID_PRODUCT'}, inplace=True)
+    sdd_v2 = sdd.merge(prd, on='PID', how='left').fillna('')
+    #sdd_v2.drop(columns=['PID_y'], inplace=True)
     columns_to_keep = ['PID', 'SKU', '颜色', '工艺', '在制数', '待包装', '库存', '待发数', '未发数总计', '更新日期']
     sdd_v2 = sdd_v2[columns_to_keep]
+    #import pdb;pdb.set_trace()
+    pass
     sdd_v2.to_excel(f"./库存.xlsx", index=False)
+    sdd_v2.to_excel(f"./库存_v2.xlsx", index=False)
 
 if __name__ == "__main__":
     data = {}
