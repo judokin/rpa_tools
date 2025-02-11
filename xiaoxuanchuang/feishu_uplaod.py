@@ -4,6 +4,7 @@ import requests
 import os
 import datetime
 import importlib.util
+import pandas as pd
 from messange import send
 # 指定文件路径
 config_file_path = r"D:\rpa_tools\feishu\config.py"
@@ -81,7 +82,71 @@ def delete_file(file_token, type=''):
 
     print("Status Code:", response.status_code)
     print("Response Text:", response.text)
-if __name__ == "__main__":
+def clear_tables():
+    url = "https://open.feishu.cn/open-apis/sheets/v3/spreadsheets/HdwSsEP8thucYCtpoUdcGzk9nid/sheets/query"
+    headers = {
+        "Authorization": f"Bearer {tenant_access_token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, headers=headers)
+
+    print(response.status_code)
+    data = response.json() 
+    print(data)
+    
+    url = "https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/HdwSsEP8thucYCtpoUdcGzk9nid/dimension_range"
+
+    data = {
+        "dimension": {
+            "sheetId": data['data']['sheets'][0]['sheet_id'],
+            "majorDimension": "ROWS",
+            "startIndex": 2,
+            "endIndex": data['data']['sheets'][0]['grid_properties']['row_count']
+        }
+    }
+
+    response = requests.delete(url, headers=headers, data=json.dumps(data))
+
+    print(response.status_code)
+    print(response.json())
+
+def insert_tables():
+    url = "https://open.feishu.cn/open-apis/sheets/v3/spreadsheets/HdwSsEP8thucYCtpoUdcGzk9nid/sheets/query"
+    headers = {
+        "Authorization": f"Bearer {tenant_access_token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, headers=headers)
+
+    print(response.status_code)
+    data = response.json() 
+    print(data)
+    
+
+    url = "https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/HdwSsEP8thucYCtpoUdcGzk9nid/values_batch_update"
+    sheet_id = data['data']['sheets'][0]['sheet_id']
+    data = {}
+    data['valueRanges'] = []
+    df = pd.read_excel(f"./库存_v2.xlsx")
+    df = df.fillna('')
+    for index, row in df.iterrows():
+        #print(index, list(row.values))
+        sheet_index = index + 2
+        data['valueRanges'].append({
+            "range": f"{sheet_id}!A"  + str(sheet_index) + ":J"  + str(sheet_index),
+            "values": [list(row.values)]
+        })
+    response = requests.post(url, headers=headers, data=json.dumps(data))
+    print(response.status_code)
+    res = response.json()
+    print(res)
+    # if res['msg'] != 'success':
+    #     import pdb;pdb.set_trace()
+    #     pass
+
+def run_v1():
     res_json = list_files()
     for item in res_json['data']['files']:
         if item['name'] not in ['库存.xlsx', '库存']:
@@ -106,3 +171,7 @@ if __name__ == "__main__":
     import_tasks_by_data(data)
     datetime_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     send(f"库存表格上传完成, 上传时间为：{datetime_str}")
+
+if __name__ == "__main__":
+    clear_tables()
+    insert_tables()

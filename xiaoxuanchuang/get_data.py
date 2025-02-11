@@ -66,9 +66,9 @@ def join_excel():
     #sdd_v2.drop(columns=['PID_y'], inplace=True)
     columns_to_keep = ['PID', 'SKU', '颜色', '工艺', '在制数', '待包装', '库存', '待发数', '未发数总计', '更新日期']
     sdd_v2 = sdd_v2[columns_to_keep]
+    sdd_v2['PID'] = sdd_v2['PID'].astype(str)
+    #sdd_v2.to_excel(f"./库存.xlsx", index=False)
     #import pdb;pdb.set_trace()
-    pass
-    sdd_v2.to_excel(f"./库存.xlsx", index=False)
     sdd_v2.to_excel(f"./库存_v2.xlsx", index=False)
 
 if __name__ == "__main__":
