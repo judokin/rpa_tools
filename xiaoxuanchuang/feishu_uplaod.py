@@ -175,3 +175,5 @@ def run_v1():
 if __name__ == "__main__":
     clear_tables()
     insert_tables()
+    datetime_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    send(f"库存表格上传完成, 上传时间为：{datetime_str}")
