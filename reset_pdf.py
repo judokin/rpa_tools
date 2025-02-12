@@ -107,12 +107,7 @@ def reset_main_pdf_v2(input_pdf):
                 #print("目的地,y1", y1)
                 mdd_y1 = y1
                 # 绘制白色矩形覆盖原文本
-                #new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
-                new_page.add_redact_annot(
-                    [x0, y0, x1, y1-5],
-                    fill=(1, 1, 1)
-                )
-                new_page.apply_redactions()
+                new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
                 #new_page.draw_rect([x0, y0, x1, y1], color=(0, 0, 0), fill=(0, 0, 0))
             if "发货地" in text:
                 regions = rg_data_1[i][0]
@@ -125,12 +120,7 @@ def reset_main_pdf_v2(input_pdf):
                 #print("发货地,y1", y1, mdd_y1)
                 # 在该文本区域绘制一个黑色矩形覆盖
                 #new_page.draw_rect([x0, y0, x1, y1], color=(0, 0, 0), fill=(0, 0, 0))
-                #new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
-                new_page.add_redact_annot(
-                    [x0, y0, x1, y1-5],
-                    fill=(1, 1, 1)
-                )
-                new_page.apply_redactions()
+                new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
                 #import pdb;pdb.set_trace()
                 pass
     # 将新文档保存为指定文件名
@@ -177,24 +167,14 @@ def set_main_pdf(input_pdf):
                 y1 = y0 + 8
                 # 在该文本区域绘制一个黑色矩形覆盖
                 #new_page.draw_rect([x0, y0, x1, y1], color=(0, 0, 0), fill=(0, 0, 0))
-                #new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
-                new_page.add_redact_annot(
-                    [x0, y0, x1, y1],
-                    fill=(1, 1, 1)
-                )
-                new_page.apply_redactions()
+                new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
                 pass
             if "发货地" in text:
                 y0 += 10
                 y1 = y0 + 8
                 # 在该文本区域绘制一个黑色矩形覆盖
                 #new_page.draw_rect([x0, y0, x1, y1], color=(0, 0, 0), fill=(0, 0, 0))
-                #new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
-                new_page.add_redact_annot(
-                    [x0, y0, x1, y1],
-                    fill=(1, 1, 1)
-                )
-                new_page.apply_redactions()
+                new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
                 pass
     # 将新文档保存为指定文件名
     new_doc.save(output_pdf)
@@ -236,12 +216,7 @@ def set_sku_pdf(input_pdf):
                 # 添加白色矩形覆盖
                 y0 += (10 + config.sku_y0)
                 y1 = y0 + 10
-                #new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
-                new_page.add_redact_annot(
-                    [x0, y0, x1, y1],
-                    fill=(1, 1, 1)
-                )
-                new_page.apply_redactions()
+                new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
                 # 在白色区域内添加文本 "MADE IN CHINA" 和 "skuxxx"
                 new_page.insert_text(
                     (x0, y0 + 8),  # 设置插入文本的位置
