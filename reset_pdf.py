@@ -110,7 +110,10 @@ def reset_main_pdf_v2(input_pdf):
                 new_page.draw_rect([x0, y0, x1, y1], color=(1, 1, 1), fill=(1, 1, 1))
                 #new_page.draw_rect([x0, y0, x1, y1], color=(0, 0, 0), fill=(0, 0, 0))
             if "发货地" in text:
-                regions = rg_data_1[i][0]
+                try:
+                    regions = rg_data_1[i][0]
+                except:
+                    continue
                 regions_dict = rg_data_1[i][1]
                 y0 += regions[0][1] - regions[1][1] + config.address_y0
                 if input_pdf.find("岚风") > -1:
@@ -309,3 +312,4 @@ if __name__ == '__main__':
                         send_message(message)
                 except:
                     send_message(path + ".zip上传失败:" + res_text)
+    os.system(f'python D:\\rpa_tools\\reset_pdf_v2.py')
