@@ -114,7 +114,10 @@ def reset_main_pdf_v2(input_pdf):
                 new_page.apply_redactions()
                 #new_page.draw_rect([x0, y0, x1, y1], color=(0, 0, 0), fill=(0, 0, 0))
             if "发货地" in text:
-                regions = rg_data_1[i][0]
+                try:
+                    regions = rg_data_1[i][0]
+                except:
+                    continue
                 regions_dict = rg_data_1[i][1]
                 y0 += regions[0][1] - regions[1][1] + config.address_y0
                 if input_pdf.find("岚风") > -1:
