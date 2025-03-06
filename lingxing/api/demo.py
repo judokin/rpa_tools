@@ -1,5 +1,7 @@
 import requests
 import configparser
+import time
+import  datetime
 
 # 创建ConfigParser对象
 config = configparser.ConfigParser()
@@ -30,7 +32,7 @@ def get_access_token():
         print("Response content:", response.text)
 
 
-def generate_sign(params, access_token, app_key, timestamp, app_id):
+def generate_sign(params, access_token, timestamp, app_id):
     import hashlib
     import urllib.parse
     from Crypto.Cipher import AES
@@ -41,7 +43,6 @@ def generate_sign(params, access_token, app_key, timestamp, app_id):
 
     :param params: dict, 业务请求参数
     :param access_token: str, 访问令牌
-    :param app_key: str, 应用密钥
     :param timestamp: str, 时间戳
     :param app_id: str, 应用ID，用作AES加密密钥
     :return: dict, 包含生成的签名和编码后的签名
@@ -49,7 +50,7 @@ def generate_sign(params, access_token, app_key, timestamp, app_id):
     # 添加固定参数
     params.update({
         'access_token': access_token,
-        'app_key': app_key,
+        'app_key': app_id,
         'timestamp': timestamp
     })
 
@@ -82,16 +83,79 @@ def generate_sign(params, access_token, app_key, timestamp, app_id):
 
 # get 请求 https://openapi.lingxing.com/erp/sc/data/seller/lists
 def get_seller_list():
+    import time
     access_token = get_access_token()
     # params, access_token, app_key, timestamp, app_id
     params = {}
-    app_key = config['DEFAULT']['appKey']
-    timestamp = '1678900000'
+    # appSecret
+    access_token = access_token['data']['access_token']
+    timestamp = str(int(time.time()))
     app_id = config['DEFAULT']['appId']
-    sign = generate_sign(params, access_token["accessToken"], app_key, timestamp, app_id)
-    response = requests.get('https://openapi.lingxing.com/erp/sc/data/seller/lists')
-    print(response.text)
+    sign = generate_sign(params, access_token, timestamp, app_id)
+    print(sign)
+    ext_url = f"access_token={access_token}&app_key={app_id}&timestamp={timestamp}&sign={sign['encrypted_sign']}"
+    url = 'https://openapi.lingxing.com/erp/sc/data/seller/lists?' + ext_url
+    print(url)
+    response = requests.get(url)
+    resp = response.json()
+    count = 1
+    shops = []
+    for i,d in enumerate(resp['data']):
+        if d['country'] != '美国':
+            continue
+        shops.append(d)
+        count += 1
+    return shops
+
+def order_list_by_shop(sid):
+    access_token = get_access_token()
+    start_date = (datetime.datetime.now() - datetime.timedelta(days=20)).strftime("%Y-%m-%d")
+    end_date = datetime.datetime.now().strftime("%Y-%m-%d")
+    params = {
+            "sid":int(sid),
+            "sort_desc_by_date_type": 1,
+            "length": 5000,
+            "fulfillment_channel": 2,
+            "start_date": start_date,
+            "end_date": end_date
+            }
+    print(params)
+    # appSecret
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    access_token = access_token['data']['access_token']
+    timestamp = str(int(time.time()))
+    app_id = config['DEFAULT']['appId']
+    sign = generate_sign(params, access_token, timestamp, app_id)
+    #print(sign)
+    ext_url = f"access_token={access_token}&app_key={app_id}&timestamp={timestamp}&sign={sign['encrypted_sign']}"
+    url = 'https://openapi.lingxing.com/erp/sc/data/mws/orders?' + ext_url
+    print(url)
+    print(headers)
+    headers = {}
+    response = requests.post(
+        url,
+        headers=headers,
+        json=params,
+    )
+    # 检查响应状态码
+    if response.status_code == 200:
+        # 解析响应内容（假设响应是JSON格式）
+        res = response.json()
+        print("", res)
+        return res 
+    else:
+        print("Response content:", response.text)
 
 if __name__ == '__main__':
     #get_access_token()
-    get_seller_list()
+    shops = get_seller_list()
+    orders = order_list_by_shop(shops[4]['sid'])
+    import pdb;pdb.set_trace()
+    for s in shops:
+        print("读取~~~", s["name"])
+        orders = order_list_by_shop(s['sid'])
+        import pdb;pdb.set_trace()
+        pass
+    pass
