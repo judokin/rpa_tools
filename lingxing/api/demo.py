@@ -148,10 +148,50 @@ def order_list_by_shop(sid):
     else:
         print("Response content:", response.text)
 
+def most_order_list_by_shop(sid):
+    access_token = get_access_token()
+    start_date = (datetime.datetime.now() - datetime.timedelta(days=20)).strftime("%Y-%m-%d")
+    end_date = datetime.datetime.now().strftime("%Y-%m-%d")
+    params = {
+            "sid":[int(sid)],
+            "length": 1000,
+            "offset": 0,
+            "start_date": start_date,
+            "end_date": end_date
+            }
+    print(params)
+    # appSecret
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    access_token = access_token['data']['access_token']
+    timestamp = str(int(time.time()))
+    app_id = config['DEFAULT']['appId']
+    sign = generate_sign(params, access_token, timestamp, app_id)
+    #print(sign)
+    ext_url = f"access_token={access_token}&app_key={app_id}&timestamp={timestamp}&sign={sign['encrypted_sign']}"
+    url = 'https://openapi.lingxing.com/order/amzod/api/orderList?' + ext_url
+    print(url)
+    print(headers)
+    headers = {}
+    response = requests.post(
+        url,
+        headers=headers,
+        json=params,
+    )
+    # 检查响应状态码
+    if response.status_code == 200:
+        # 解析响应内容（假设响应是JSON格式）
+        res = response.json()
+        print("", res)
+        return res 
+    else:
+        print("Response content:", response.text)
+
 if __name__ == '__main__':
     #get_access_token()
     shops = get_seller_list()
-    orders = order_list_by_shop(shops[4]['sid'])
+    orders = most_order_list_by_shop(shops[4]['sid'])
     import pdb;pdb.set_trace()
     for s in shops:
         print("读取~~~", s["name"])
