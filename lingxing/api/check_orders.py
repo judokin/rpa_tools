@@ -280,7 +280,7 @@ def del_orderby(sid, seller_fulfillment_order_ids):
 def upload_file(file_path):
     import json
     # 指定文件路径
-    config_file_path = r"D:\rpa_tools\feishu\config.py"
+    config_file_path = r"/root/rpa_tools/feishu/config.py"
 
     # 加载模块
     import importlib.util
