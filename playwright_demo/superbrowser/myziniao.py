@@ -443,7 +443,7 @@ if __name__ == "__main__":
     msg = "=====直接爬官网，脚本运行完成=====,use time: %ss" % round((end_time - start_time), 2)
     print(msg)
     send_message(msg)
-
+    os.system("python D:\\rpa_tools\\playwright_demo\\superbrowser\\read_orders.py")
     #sync_playwright.stop()
 
     """关闭客户端"""
