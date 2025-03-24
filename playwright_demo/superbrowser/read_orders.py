@@ -134,4 +134,4 @@ def upload_file(file_path):
     return response.text
 if __name__ == "__main__":
     run()
-    os.system("python read_orders.py")
+    #os.system("python read_orders.py")
