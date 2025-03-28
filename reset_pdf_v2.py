@@ -1,3 +1,4 @@
+import shutil
 import pymupdf as fitz  # PyMuPDF
 import os
 import json
@@ -282,6 +283,19 @@ def compress_folder_to_zip(folder_path):
                 zipf.write(file_path, arcname)
     
     print(f"压缩完成: {zip_file_path}")
+# 压缩并上传
+def compress_and_upload(path):
+    if not os.path.exists(path + ".zip"):
+        compress_folder_to_zip(path)
+        from feishu.feishu_uplaod import upload_file
+        res_text = upload_file(path + ".zip")
+        try:
+            upload_res = json.loads(res_text)
+            if upload_res['msg'] == "Success":
+                message = path + ".zip上传成功"
+                send_message(message)
+        except:
+            send_message(path + ".zip上传失败:" + res_text)
 if __name__ == '__main__':
     #test_path = r"C:\Users\Administrator\Desktop\Super Browser\亚马逊--岚风（子账号）\FBA18RMFV90D\1.21岚风店-WLF24047-136箱标准件-慢船-LGB8-夏欣怡\\1.21岚风店-WLF24047-136箱标准件-慢船-LGB8-夏欣怡_temp.pdf"
     #reset_main_pdf_v2(test_path)
@@ -297,12 +311,10 @@ if __name__ == '__main__':
             continue
         for code in os.listdir(save_path + "\\" + d):
             path = save_path + "\\" + d + "\\" + code
-            if code.find("FBA") != 0 or code.endswith(".zip") or not code.endswith("v2"):
+            if code.find("FBA") != 0 or code.endswith(".zip") or not code.endswith("v2")  or code.endswith("v3"):
                 continue
             if not os.path.isdir(path):
                 continue
-            print(path)
-            #import pdb;pdb.set_trace()
             for header_dir in os.listdir(path):
                 header_path = path + "\\" + header_dir
                 for header_file in os.listdir(header_path):
@@ -323,14 +335,13 @@ if __name__ == '__main__':
                             except Exception as e:
                                 traceback.print_exc()
                                 pass
-            if not os.path.exists(path + ".zip"):
-                compress_folder_to_zip(path)
-                from feishu.feishu_uplaod import upload_file
-                res_text = upload_file(path + ".zip")
-                try:
-                    upload_res = json.loads(res_text)
-                    if upload_res['msg'] == "Success":
-                        message = path + ".zip上传成功"
-                        send_message(message)
-                except:
-                    send_message(path + ".zip上传失败:" + res_text)
+            print(path)
+            compress_and_upload(path)
+            path_v3 = path.replace("_v2", "_v3")
+            # 复制整个文件夹path到path_v3
+            if not os.path.exists(path_v3):
+                print(f"开始复制{path_v3}")
+                shutil.copytree(path, path_v3)
+                import reset_excel
+                reset_excel.run(path_v3)
+                compress_and_upload(path_v3)

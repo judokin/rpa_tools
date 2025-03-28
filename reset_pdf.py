@@ -272,7 +272,7 @@ if __name__ == '__main__':
             continue
         for code in os.listdir(save_path + "\\" + d):
             path = save_path + "\\" + d + "\\" + code
-            if code.find("FBA") != 0 or code.endswith(".zip") or code.endswith("v2"):
+            if code.find("FBA") != 0 or code.endswith(".zip") or code.endswith("v2") or code.endswith("v3"):
                 continue
             if not os.path.isdir(path):
                 continue
@@ -301,15 +301,17 @@ if __name__ == '__main__':
                             except Exception as e:
                                 traceback.print_exc()
                                 pass
-            if not os.path.exists(path + ".zip"):
-                compress_folder_to_zip(path)
-                from feishu.feishu_uplaod import upload_file
-                res_text = upload_file(path + ".zip")
-                try:
-                    upload_res = json.loads(res_text)
-                    if upload_res['msg'] == "Success":
-                        message = path + ".zip上传成功"
-                        send_message(message)
-                except:
-                    send_message(path + ".zip上传失败:" + res_text)
+            
+            # if not os.path.exists(path + ".zip"):
+            #     compress_folder_to_zip(path)
+            #     from feishu.feishu_uplaod import upload_file
+            #     res_text = upload_file(path + ".zip")
+            #     try:
+            #         upload_res = json.loads(res_text)
+            #         if upload_res['msg'] == "Success":
+            #             message = path + ".zip上传成功"
+            #             send_message(message)
+            #     except:
+            #         send_message(path + ".zip上传失败:" + res_text)
+            #         pass
     os.system(f'python D:\\rpa_tools\\reset_pdf_v2.py')
