@@ -192,7 +192,7 @@ def most_order_list_by_shop(sid, offset=0, length=20):
     ext_url = f"access_token={access_token}&app_key={app_id}&timestamp={timestamp}&sign={sign['encrypted_sign']}"
     url = 'https://openapi.lingxing.com/order/amzod/api/orderList?' + ext_url
     headers = {}
-    for try_time in range(10):
+    for try_time in range(20):
         if try_time > 0:
             time.sleep(5)
             print("刚刚请求失败了，重试中~~~", try_time)
@@ -201,7 +201,7 @@ def most_order_list_by_shop(sid, offset=0, length=20):
                 url,
                 headers=headers,
                 json=params,
-                timeout=30
+                timeout=90
             )
             # 检查响应状态码
             if response.status_code == 200:
@@ -257,7 +257,7 @@ def cancelOrder(sid, seller_fulfillment_order_id):
                 url,
                 headers=headers,
                 json=params,
-                timeout=30
+                timeout=60
             )
             # 检查响应状态码
             if response.status_code == 200:
