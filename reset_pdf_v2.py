@@ -1,5 +1,8 @@
 import shutil
-import pymupdf as fitz  # PyMuPDF
+try:
+    import pymupdf as fitz  # PyMuPDF
+except:
+    import fitz
 import os
 import json
 import pandas as pd
@@ -338,6 +341,7 @@ if __name__ == '__main__':
             print(path)
             compress_and_upload(path)
             path_v3 = path.replace("_v2", "_v3")
+            path_v4 = path.replace("_v2", "_v4")
             # 复制整个文件夹path到path_v3
             if not os.path.exists(path_v3):
                 print(f"开始复制{path_v3}")
@@ -345,3 +349,8 @@ if __name__ == '__main__':
                 import reset_excel
                 reset_excel.run(path_v3)
                 compress_and_upload(path_v3)
+                print(f"开始复制{path_v4}")
+                shutil.copytree(path_v3, path_v4)
+                import reset_pdf_v4
+                reset_pdf_v4.run(path_v4)
+                compress_and_upload(path_v4)
