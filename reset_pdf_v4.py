@@ -90,6 +90,7 @@ def set_sku_pdf_v4(input_pdf):
                 # )
                 
                 text = text.replace(" Rugs ", " Mats ")
+                text = text.replace(" Rug ", " Mat ")
                 fontsize = 7
                 color = (0, 0, 0)  # 白色字体
                 fontname = "Times-Roman"

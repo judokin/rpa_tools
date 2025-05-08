@@ -314,7 +314,7 @@ if __name__ == '__main__':
             continue
         for code in os.listdir(save_path + "\\" + d):
             path = save_path + "\\" + d + "\\" + code
-            if code.find("FBA") != 0 or code.endswith(".zip") or not code.endswith("v2") or not code.endswith("v4") or code.endswith("v3"):
+            if code.find("FBA") != 0 or code.endswith(".zip") or not code.endswith("v2") or code.endswith("v4") or code.endswith("v3"):
                 continue
             if not os.path.isdir(path):
                 continue
