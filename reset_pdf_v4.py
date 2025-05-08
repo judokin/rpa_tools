@@ -38,7 +38,10 @@ def set_sku_pdf_v4(input_pdf):
     pdf_dir = os.path.dirname(input_pdf)
     if not input_pdf.endswith("_temp.pdf"):
         print(input_pdf, "跳过")
-        return ""
+        new_name = input_pdf.replace(".pdf", "_temp.pdf")
+        os.rename(input_pdf, new_name)
+        input_pdf = new_name
+
     sku = file_name=os.path.basename(input_pdf).split('_temp')[0]
     output_pdf = pdf_dir + "\\" + sku + ".pdf"
     # 打开输入 PDF 文件
