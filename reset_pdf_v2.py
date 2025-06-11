@@ -101,8 +101,12 @@ def reset_main_pdf_v2(input_pdf):
             # 获取文本块的坐标和内容
             x0, y0, x1, y1, text, _, _ = block
             if "目的地" in text:
-                regions = rg_data_0[i][0]
-                regions_dict = rg_data_0[i][1]
+                try:
+                    regions = rg_data_0[i][0]
+                    regions_dict = rg_data_0[i][1]
+                except:
+                    regions = rg_data_0[0][0]
+                    regions_dict = rg_data_0[0][1]
                 y0 += regions_dict['目的地：'][1] - regions_dict['FBA:'][1] + config.destination_y0
                 x0 += regions[2][0] - regions[0][0] + config.destination_y1
                 y1 = y0 + (regions[1][1] - regions[-1][1])+1
@@ -120,9 +124,10 @@ def reset_main_pdf_v2(input_pdf):
             if "发货地" in text:
                 try:
                     regions = rg_data_1[i][0]
+                    regions_dict = rg_data_1[i][1]
                 except:
-                    continue
-                regions_dict = rg_data_1[i][1]
+                    regions = rg_data_1[0][0]
+                    regions_dict = rg_data_1[0][1]
                 y0 += regions[0][1] - regions[1][1] + config.address_y0
                 if input_pdf.find("岚风") > -1:
                     y1 = mdd_y1-1
@@ -300,9 +305,10 @@ def compress_and_upload(path):
         except:
             send_message(path + ".zip上传失败:" + res_text)
 if __name__ == '__main__':
-    #test_path = r"C:\Users\Administrator\Desktop\Super Browser\亚马逊--岚风（子账号）\FBA18RMFV90D\1.21岚风店-WLF24047-136箱标准件-慢船-LGB8-夏欣怡\\1.21岚风店-WLF24047-136箱标准件-慢船-LGB8-夏欣怡_temp.pdf"
-    #reset_main_pdf_v2(test_path)
-    #import pdb;pdb.set_trace()
+    # test_path = r"C:\Users\Administrator\Downloads\FBA18Y2KCJDH_v4\6.24北蓉US普船AVP1-1箱随停卷帘灰10-1\6.24北蓉US普船AVP1-1箱随停卷帘灰10-1_temp.pdf"
+    # test_path = r"C:\Users\Administrator\Downloads\6.24北蓉US普船XLX6-3箱随停卷帘5\6.24北蓉US普船XLX6-3箱随停卷帘5_temp.pdf"
+    # reset_main_pdf_v2(test_path)
+    # import pdb;pdb.set_trace()
     config_path = "D:\\rpa.txt"
     with open(config_path, 'r', encoding='utf-8') as file:
         html_content = file.read()
