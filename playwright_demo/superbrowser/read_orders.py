@@ -1,6 +1,7 @@
 import os
 import datetime
 import pandas as pd
+from lock_warehouse import *
 # 定义默认前缀
 DEFAULT_PREFIX = "SK-"
 # 默认告警时间
@@ -40,14 +41,55 @@ def run():
     filter_dfs['日期时间'] = filter_dfs['日期'] + ' ' + filter_dfs['时间'].str.replace(' PST', '')
     filter_dfs['日期时间'] = filter_dfs['日期时间'].str.replace(' PDT', '')
     try:
-        filter_dfs['日期时间'] = pd.to_datetime(filter_dfs['日期时间'])
+        filter_dfs['日期时间'] = pd.to_datetime(filter_dfs['日期时间'], format='mixed')
     except:
         pass
+    dead_line_time = (datetime.datetime.now() - datetime.timedelta(days=DEFAULT_WARN_TIME)).strftime("%Y-%m-%d %H:%M:%S")
     # 筛选出日期时间为十一天后的数据
-    refilter_dfs = filter_dfs[
-        (filter_dfs['日期时间'] <= (datetime.datetime.now()-datetime.timedelta(days=DEFAULT_WARN_TIME))) &
-        (filter_dfs['订单号'].str.find(DEFAULT_PREFIX) == 0)
-        ]
+    try:
+        refilter_dfs = filter_dfs[
+            (filter_dfs['日期时间'] <= (datetime.datetime.now()-datetime.timedelta(days=DEFAULT_WARN_TIME)))
+            &(filter_dfs['订单号'].str.find(DEFAULT_PREFIX) == 0)
+            ]
+    except:
+        pass
+    print("done")
+    #data={"records": [{"fields": {}}]},
+    data ={"records": []}
+    tb_data = get_table_data()
+    member_dict = {}
+    members = get_group_members()
+    for member in members['data']['items']:
+        member_dict[hanzi_to_pinyin_initials(member['name'])] = member
+    # hanzi_to_pinyin_initials()
+    order_ids = []
+    for i in range(len(tb_data['data']['items'])):
+        order_ids.append(tb_data['data']['items'][i]['fields']['锁库订单'][0]['text'])
+            # order_ids.append(refilter_dfs.iloc[i]['订单号'])
+    for i in range(len(refilter_dfs)):
+        if refilter_dfs.iloc[i]['订单号'] in order_ids:
+            continue
+        fields = {}
+        fields['锁库订单']     = refilter_dfs.iloc[i]['订单号']
+        fields['锁库时间']     = refilter_dfs.iloc[i]['日期时间'].strftime("%Y-%m-%d %H:%M:%S")
+        fields['取消时间']     = dead_line_time
+        # fields['锁库订单状态'] = '未取消'
+        fields['店铺']        = refilter_dfs.iloc[i]['账号']
+        fields['运营标签']    = refilter_dfs.iloc[i]['订单号'].split("-")[1]
+        # fields['运营标签']    = 'CW'
+        if fields["运营标签"] in member_dict:
+            fields['运营人员']    = [{"id":member_dict[fields["运营标签"]]['member_id']}]
+        else:
+            # fields['运营人员']    = [{"id":"ou_89c9c2b44df9b87aa1ca4c562905ed48"}]
+            fields['运营人员']    = [{"id":"ou_50c666a3030a7362b6878147ab42ff2c"}] # 陈旺
+        data['records'].append({"fields": fields})
+    if len(data['records']) > 0:
+        print("开始插入数据")
+        insert_table_data(data=data)
+    tb_data = get_table_data()
+    for item in tb_data['data']['items']:
+        if '锁库订单状态' not in item['fields']:
+            reset_fields(data={"fields": {"锁库订单状态": "未取消"}}, record_id=item['record_id'])
     #按账号来分组
     message_text = "(官网数据)"
     
