@@ -158,7 +158,7 @@ def set_sku_pdf_v4(input_pdf):
                 # 在白色区域内添加文本 "MADE IN CHINA" 和 "skuxxx"
                 new_page.insert_text(
                     (x0, y0 + 8),  # 设置插入文本的位置
-                    "MADE IN CHINA " + sku,
+                    "NEW MADE IN CHINA " + sku,
                     fontsize=8,       # 字体大小
                     color=(0, 0, 0),  # 黑色字体
                 )
@@ -200,7 +200,7 @@ def run(dir_path):
         set_sku_pdf_v4(pdf_file_name)
 
 if __name__ == '__main__':
-    dir_path = r'C:\Users\Administrator\Desktop\Super Browser\亚马逊-北蓉-北美（子账号）\FBA18VBT9P7G_v2'
+    dir_path = r'C:\Users\Administrator\Downloads\FBA18Y2KCJDH_v4'
     run(dir_path)
 
     
