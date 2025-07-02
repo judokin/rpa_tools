@@ -256,7 +256,7 @@ def set_sku_pdf(input_pdf):
                 # 在白色区域内添加文本 "MADE IN CHINA" 和 "skuxxx"
                 new_page.insert_text(
                     (x0, y0 + 8),  # 设置插入文本的位置
-                    "MADE IN CHINA " + sku,
+                    "NEW MADE IN CHINA " + sku,
                     fontsize=8,       # 字体大小
                     color=(0, 0, 0),  # 黑色字体
                 )
