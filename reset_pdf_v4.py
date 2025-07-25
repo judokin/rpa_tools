@@ -200,7 +200,7 @@ def run(dir_path):
         set_sku_pdf_v4(pdf_file_name)
 
 if __name__ == '__main__':
-    dir_path = r'C:\Users\Administrator\Downloads\FBA18Y2KCJDH_v4'
+    dir_path = r'C:\Users\Administrator\Desktop\Super Browser\亚马逊-北蓉-北美（子账号）\FBA18ZDSMDTB_v4'
     run(dir_path)
 
     

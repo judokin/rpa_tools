@@ -98,8 +98,12 @@ def reset_main_pdf_v2(input_pdf):
             # 获取文本块的坐标和内容
             x0, y0, x1, y1, text, _, _ = block
             if "目的地" in text:
-                regions = rg_data_0[i][0]
-                regions_dict = rg_data_0[i][1]
+                try:
+                    regions = rg_data_0[i][0]
+                    regions_dict = rg_data_0[i][1]
+                except:
+                    regions = rg_data_0[0][0]
+                    regions_dict = rg_data_0[0][1]
                 y0 += regions_dict['目的地：'][1] - regions_dict['FBA:'][1] + config.destination_y0
                 x0 += regions[2][0] - regions[0][0] + config.destination_y1
                 y1 = y0 + (regions[1][1] - regions[-1][1])+1
@@ -112,9 +116,10 @@ def reset_main_pdf_v2(input_pdf):
             if "发货地" in text:
                 try:
                     regions = rg_data_1[i][0]
+                    regions_dict = rg_data_1[i][1]
                 except:
-                    continue
-                regions_dict = rg_data_1[i][1]
+                    regions = rg_data_1[0][0]
+                    regions_dict = rg_data_1[0][1]
                 y0 += regions[0][1] - regions[1][1] + config.address_y0
                 if input_pdf.find("岚风") > -1:
                     y1 = mdd_y1-1
@@ -223,7 +228,7 @@ def set_sku_pdf(input_pdf):
                 # 在白色区域内添加文本 "MADE IN CHINA" 和 "skuxxx"
                 new_page.insert_text(
                     (x0, y0 + 8),  # 设置插入文本的位置
-                    "MADE IN CHINA " + sku,
+                    "NEW MADE IN CHINA " + sku,
                     fontsize=8,       # 字体大小
                     color=(0, 0, 0),  # 黑色字体
                 )
