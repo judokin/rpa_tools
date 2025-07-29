@@ -11,7 +11,7 @@ config.read('config.ini')
 api_key = config['DEFAULT']['api_key']
 
 # 初始化DeepSeek客户端
-client = OpenAI(api_key='sk-5fcef1020447499a88ebb48b55efbd5b', base_url="https://api.deepseek.com")
+client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
 
 # 定义消息
 messages = [{"role": "user", "content": "9.11 and 9.8, which is greater?"}]
