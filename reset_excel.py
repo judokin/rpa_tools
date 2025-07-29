@@ -53,8 +53,12 @@ def run(dir_path):
         df = pd.read_excel(excel_file_name, header=None)
         # df.loc[5] 加一格，内容为 
         sku_start = 6
-        if df.loc[sku_start].values[-1] == 'FNSKU':
+        try:
+            if df.loc[sku_start].values[-1] == 'FNSKU':
+                continue
+        except:
             continue
+            pass
         df.loc[sku_start, "snsku"] = "FNSKU"
         for i in range(1, len(df)-6):
             sku_start += 1
@@ -65,5 +69,7 @@ def run(dir_path):
         print("save to", excel_file_name)
 
 if __name__ == '__main__':
-    dir_path = r'C:\Users\Administrator\Desktop\Super Browser\亚马逊-北蓉-北美（子账号）\FBA18VBT9P7G_v2'
+    dir_path = r'C:\Users\Administrator\Desktop\Super Browser\亚马逊-灿东-欧洲（子账号）\FBA15K9FD8W0_v2'
     run(dir_path)
+
+    
