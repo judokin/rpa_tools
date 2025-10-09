@@ -14,6 +14,7 @@ from playwright import sync_api
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 import datetime
 from read_html import read_page
+from read_html import read_page_v2
 import pandas as pd
 import sys
 
@@ -342,7 +343,7 @@ def use_one_browser_run_task(playwright, browser):
                 with open(f'{folder_name}/page_{i}.html', 'w', encoding='utf-8') as f:
                     f.write(html_content)
                 print(f"读取~~{folder_name}/page_{i}.html")
-                datas, order_size = read_page(f'{folder_name}/page_{i}.html')
+                datas, order_size = read_page_v2(f'{folder_name}/page_{i}.html')
                 all_datas += datas
                 # if i >= 1 + order_size // 100:
                 #     break
@@ -388,6 +389,7 @@ if __name__ == "__main__":
         exit()
 
     if is_windows:
+        client_path = R'D:\soft\ziniao\ziniao.exe'  # 客户端程序starter.exe的路径
         client_path = R'C:\Users\Public\SuperBrowser\starter.exe'  # 客户端程序starter.exe的路径
     else:
         client_path = R'ziniao'  # 客户端程序名称
