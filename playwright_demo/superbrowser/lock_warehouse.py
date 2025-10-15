@@ -108,6 +108,8 @@ def insert_table_data(data={"records": [{"fields": {}}]}):
     print(response.json())
 
 # 获取群成员列表
+# chat_id 到这里根据群名称来查 https://open.feishu.cn/document/server-docs/group/chat/search?appId=cli_a7d537a861a1d00e
+# 杭州陆遥科技有限公司 oc_ac8b83a078b491f9c11b995ff8228a7c
 def get_group_members(chat_id='oc_6cb224fd44af0f6a41d1e426c5b7c057'):
     params = {
         'page_size': '100',
@@ -133,6 +135,6 @@ def reset_fields(data, record_id):
     print(response.status_code)
     print(response.json())
 if __name__ == '__main__':
-    insert_table_data()
+    ggm = get_group_members(chat_id='oc_9eee7160909f931df231ad5427af9bee')
     import pdb;pdb.set_trace()
     pass

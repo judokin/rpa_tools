@@ -1,7 +1,10 @@
 import pandas as pd
 import os
 # C:\Users\Administrator\Desktop\Super Browser\亚马逊-北蓉-北美（子账号）\FBA18VBT9P7G_v2
-import pymupdf as fitz  # PyMuPDF
+try:
+    import pymupdf as fitz  # PyMuPDF
+except:
+    import fitz
 def read_fnsku_from_pdf(input_pdf):
     # 打开输入 PDF 文件
     doc = fitz.open(input_pdf)

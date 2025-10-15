@@ -1,9 +1,9 @@
 import pandas as pd
 import os
 from datetime import datetime
-
-# Define the table structure and mapping
-table_name = "product_price_tracking"
+batch_id = datetime.now().strftime("%Y%m%d%H%M%S")  # Generate batch ID
+# Define the table structure and mapping 
+table_name = "ods_keepa"
 columns_mapping = {
     "月份": "month",
     "日期": "date",
@@ -30,17 +30,18 @@ columns_mapping = {
 required_fields = {
     "parent_asin": None,
     "asin": None,
-    "create_time": "CURRENT_TIMESTAMP",
-    "update_time": "CURRENT_TIMESTAMP",
-    "batch": None
+    "batch": None,
+    "month": None
 }
-
+sql_filename = f"batch.sql"
+with open(sql_filename, 'w', encoding='utf-8') as sql_file:
+    sql_file.write("")
 def clean_value(value):
     """Clean and format values for SQL insertion"""
     if pd.isna(value) or value in [' ', '']:
         return 'NULL'
     elif isinstance(value, str):
-        return value
+        return f"'{str(value)}'"
     elif isinstance(value, (int, float)):
         return str(value)
     else:
@@ -49,15 +50,29 @@ def clean_value(value):
 def generate_insert_statements(df, excel_filename):
     """Generate INSERT statements from DataFrame"""
     insert_statements = []
-    batch_id = datetime.now().strftime("%Y%m%d%H%M%S")  # Generate batch ID
     
     for _, row in df.iterrows():
         columns = []
         values = []
-        
+        file_name_data = excel_filename.split("_")
         # Add required fields
         required_fields['batch'] = batch_id
         for field, default_value in required_fields.items():
+            if field == "parent_asin":
+                parent_asin = file_name_data[0]
+                columns.append(field)
+                values.append(clean_value(parent_asin))
+                continue
+            if field == "asin":
+                asin = file_name_data[1]
+                columns.append(field)
+                values.append(clean_value(asin))
+                continue
+            if field == "month":
+                month = file_name_data[2].replace(".xlsx", "")
+                columns.append(field)
+                values.append(clean_value(month))
+                continue
             columns.append(field)
             values.append(default_value if default_value else 'NULL')
         
@@ -67,7 +82,6 @@ def generate_insert_statements(df, excel_filename):
                 columns.append(db_col)
                 value = row[excel_col]
                 values.append(clean_value(value))
-        
         # Build the INSERT statement
         columns_str = ", ".join(columns)
         values_str = ", ".join(values)
@@ -87,16 +101,15 @@ def process_excel_files(excel_dir):
                 df = pd.read_excel(file_path)
                 insert_statements = generate_insert_statements(df, excel_file)
                 
-                # Save to SQL file
-                sql_filename = f"{os.path.splitext(excel_file)[0]}.sql"
-                with open(sql_filename, 'w', encoding='utf-8') as sql_file:
+                with open(sql_filename, 'a', encoding='utf-8') as sql_file:
                     sql_file.write("\n".join(insert_statements))
                 
                 print(f"Generated SQL file: {sql_filename} with {len(insert_statements)} INSERT statements")
+
                 
             except Exception as e:
                 print(f"Error processing {excel_file}: {str(e)}")
 
 if __name__ == "__main__":
-    excel_file_path = "D:\\rpa_tools\\mysql_connect\\2月模型取数\\Keepa\\"
+    excel_file_path = "./Keepa/"
     process_excel_files(excel_file_path)

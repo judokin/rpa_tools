@@ -4,3 +4,5 @@ dev_config.py
 .\feishu\config.py
 xiaoxuanchuang/*.xlsx
 deepseek/*.ini
+lingxing/api/*.ini
+lingxing/api/logs/*.log

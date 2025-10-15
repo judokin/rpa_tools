@@ -1,7 +1,7 @@
 [
     {
         "domain": ".amazon.com",
-        "expirationDate": 1773239834.026828,
+        "expirationDate": 1776562566.480163,
         "hostOnly": false,
         "httpOnly": false,
         "name": "ubid-main",
@@ -10,11 +10,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "130-5459660-8260345"
+        "value": "133-6238693-6854259"
     },
     {
         "domain": ".amazon.com",
-        "expirationDate": 1773239819.154626,
+        "expirationDate": 1776562291.521066,
         "hostOnly": false,
         "httpOnly": false,
         "name": "session-token",
@@ -23,11 +23,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "AWWR6JOC3wAZmLkm7DbRVqbWd2seyvVhgGd9H3NIDoT4/pespYvFWhD5Me0M+eb+C0pNoJaU9NYvaG5FZWfEcypEKU7TFweM9o3jLO6PMmYgRWPTV/nFNCC8Nnd9FJC+RsXmn1HXqFsVdMBU7PKr9vbBfpCaAffugWBKdSe39QZhfOCiP0T2J7OXeAs6UX1hZYxBH/eXEYfVE9r9F8WRD3aW5xHZM11VaXsGnHz7vwXF0bAAvshQxGnc/5JFZWFZKG4WHHPXcuwqHAFG4Fg91MV06FTDjpOK4F0PpQvskC3lWNB7zKYQFpBTHLfu6cxbO5BsWpW7p3xNW1FVkRFA6tvLgRh+XVEaSX5meai+opsmneDPQ4HSmW3QlgnJBkzU"
+        "value": "\"5EsBaZTPIR4l1K2tKzKmnbzfV845k2FkhzhT1BTJgg/ns47wMR2apdhpj2A4MhmsD51Akopa5g/K/SaAbExYHDoUSyaM479smL6HE5Ps8XIRCbxUvMXuRgxWpBgf7PadkSnXGQIgb7dP/FdB1En2JxUNQiK84FwWxwd5NFUJSoFL/APGKjXZ9mZjNDmJNsnM0ile7CS3fcGmBY5h5mF/SQZuHUOev7TYUuqpQ+N/VogKl1TEUB8kpxCQXh2FACtAv2BUHXa8tUeGWwAanukv5YxOPWX6PShaNYqXtdMFYfQdnbTVNDuVQA7KLJHxPhxoNILYRsnLnZ2yoYW9dDGmxi/mgtW6ILU+PHy8f7we2qgUsEdpbaWMSg==\""
     },
     {
         "domain": ".amazon.com",
-        "expirationDate": 1773239819.154828,
+        "expirationDate": 1776562291.521201,
         "hostOnly": false,
         "httpOnly": false,
         "name": "x-main",
@@ -36,11 +36,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "\"QGuiYfEtrt3zYoSfVDLpfC71H@9mkb0hVJD9EKCM?OwqHXZY0@wh6shx3enyMhoI\""
+        "value": "\"l8aFDqrzhmTq0tcyXR6FtNnxaZUWr92zMEw0te7efCOaDXkLCDfJT93jtW6Ag@lZ\""
     },
     {
         "domain": ".amazon.com",
-        "expirationDate": 1773239819.154972,
+        "expirationDate": 1776562291.521279,
         "hostOnly": false,
         "httpOnly": true,
         "name": "sp-cdn",
@@ -53,7 +53,20 @@
     },
     {
         "domain": ".amazon.com",
-        "expirationDate": 1773022031.754312,
+        "expirationDate": 1776562291.521137,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "session-id-time",
+        "path": "/",
+        "sameSite": null,
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "2082787201l"
+    },
+    {
+        "domain": ".amazon.com",
+        "expirationDate": 1776562290.163687,
         "hostOnly": false,
         "httpOnly": true,
         "name": "at-main",
@@ -62,36 +75,37 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "Atza|IwEBIGRmk1Zcem__TmsPx-bJIeP7PD3r8ekgtPNKov-3nHBQQN-f1ZUpamGVZsMgbnhj3RRT2hl0WwZgvaFppq0u0IMdnvm7dS9n-dOJESg0V535YETeAe2WeixolBs-AnqZil-iGy7gMWDJvphUH5Av5EevPmgs7xgPcEvgvzzVXQ09o5exOAoWWCAOq676VPgFq8ziIuWP8fIGlNIdbAAT3tFfPbD99KozN4oydVCy432ZNg"
+        "value": "Atza|IwEBIEeBGZx1XBWffZ9nm1_IIgo59ikMsl10NVH-kcsqpViyU6Ycr5ufWCWpL6wyG5w1odBcJKE-BULj1PteMqMRqTjrWlZt6qemM2BatvQW2dfuYz0Y1bqJ0COpfLxXfCc7KOFGOy02Ylz-XG2wynAGA9ybtPDDCLCWHka4JKprf3vN0VP_BA_89SBMh6USQFY_gjNQbj0-Ak7tH11j3QQD2WGOY49xSoIxg-jSuceanmq7ew"
     },
     {
         "domain": "www.amazon.com",
+        "expirationDate": 1745027189,
         "hostOnly": true,
-        "httpOnly": true,
-        "name": "JSESSIONID",
-        "path": "/",
-        "sameSite": null,
-        "secure": true,
-        "session": true,
-        "storeId": null,
-        "value": "5A8A06BCBBB7D30DA58196EC2C88C4C0"
-    },
-    {
-        "domain": ".amazon.com",
-        "expirationDate": 1776046062.661992,
-        "hostOnly": false,
         "httpOnly": false,
-        "name": "lc-main",
+        "name": "id_pk",
         "path": "/",
-        "sameSite": null,
+        "sameSite": "strict",
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "en_US"
+        "value": "eyJuIjoiMSIsImFmIjoiMSJ9"
+    },
+    {
+        "domain": "www.amazon.com",
+        "expirationDate": 1745027185,
+        "hostOnly": true,
+        "httpOnly": false,
+        "name": "id_pkel",
+        "path": "/",
+        "sameSite": "strict",
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "n1"
     },
     {
         "domain": ".amazon.com",
-        "expirationDate": 1773022031.754364,
+        "expirationDate": 1776562291.163709,
         "hostOnly": false,
         "httpOnly": true,
         "name": "sess-at-main",
@@ -100,11 +114,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "\"e7V7AjYpfZUc028No2uIEVnq2gXV/xID7O6JT/yfxsM=\""
+        "value": "\"ShstFb50oc7BRfKo4YRrTU2cwWLwtUWT22Vi1hhV3w4=\""
     },
     {
         "domain": ".amazon.com",
-        "expirationDate": 1773239834.027099,
+        "expirationDate": 1776562566.480304,
         "hostOnly": false,
         "httpOnly": false,
         "name": "session-id",
@@ -113,11 +127,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "139-4647159-2884849"
+        "value": "146-5611030-1559043"
     },
     {
         "domain": ".amazon.com",
-        "expirationDate": 1773022031.754395,
+        "expirationDate": 1776562290.163737,
         "hostOnly": false,
         "httpOnly": true,
         "name": "sst-main",
@@ -126,6 +140,6 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "Sst1|PQEKE3gX7P_WNPinIKC9PP1jCYEHtRQ7-8RYJqWLhF1Ab1o1Jz32KOPZMqjgQQeBneQpwmBpKl51bjzAmFLt4kADxy6DymWStlxjECZGOX0-KnXxZHakcTZCaDTBIwnxXzETsVbiKwHqkiHBeEXfiu3Gm9RZ-p5XTFHdjn5f_Hbm-p-TfRjmPS1I28v5_nIFnXaIgAIR9tFkKLiazLDNmoXUoFOGZoVV9TDRklBG8NVBSW6ZtxSE3x_6CK2UsuWeKkCJJnyobyaqkvXluqOx7wvtqcob-Om3A9Xll_9l3pOoOm0"
+        "value": "Sst1|PQHub8ZPHJOo6bXwdj8SMc79CZiPJcRl-i2HUjgegUBLidQynzv27GlGr18H_TmTN-SsHBjApt9rpI3-gCgfIBgIa3yHy7_cYr09EYH7M6h2MPTmFvO0ld4wUC7H3PnEZX92nUOwMQgWmbOhdUb9iH7rUI1mV-nlf6YL3DEZFEV4vUGMjsvEarZQb-Tc5_5pT6iHJ-IhfP14Oj_FWuvLQ0SLuHU51jJH-XFUmzLKb61s1TY8pSjJeiofKUnd7N0ngh-6ieGCM04IEmuXD-OuhwH8v90XXvXLtWPIhaoednm4ZSM"
     }
 ]

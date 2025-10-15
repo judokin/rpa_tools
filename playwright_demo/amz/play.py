@@ -36,7 +36,7 @@ with sync_playwright() as p:
     
     # 创建页面并跳转
     page = context.new_page()
-    df = pd.read_excel("2025.01美国站地毯TOP30链接.xlsx")
+    df = pd.read_excel("抓图片链接.xlsx")
     datas = []
     for i in range(len(df)):
         ASIN = df.iloc[i]['ASIN']
@@ -68,8 +68,6 @@ with sync_playwright() as p:
                     for aok in aoks:
                         data = {}
                         data['ASIN'] = ASIN
-                        data['商品详情页链接'] = df.iloc[i]['商品详情页链接']
-                        data['父ASIN'] = df.iloc[i]['父ASIN']
                         data['star_text'] = aok.find(class_="a-icon-alt").text
                         data['review_title'] = aok.find(class_="a-icon-alt").findNext().findNext().text
                         data['review_date'] = aok.find(class_="review-date").text
