@@ -254,12 +254,20 @@ def set_sku_pdf(input_pdf):
                 )
                 new_page.apply_redactions()
                 # 在白色区域内添加文本 "MADE IN CHINA" 和 "skuxxx"
+                sku_str = "NEW MADE IN CHINA " + sku
                 new_page.insert_text(
                     (x0, y0 + 8),  # 设置插入文本的位置
-                    "NEW MADE IN CHINA " + sku,
+                    sku_str[0:30],
                     fontsize=8,       # 字体大小
                     color=(0, 0, 0),  # 黑色字体
                 )
+                if len(sku_str) > 30:
+                    new_page.insert_text(
+                        (x0, y0 + 20),  # 设置插入文本的位置
+                        sku_str[30:],
+                        fontsize=8,       # 字体大小
+                        color=(0, 0, 0),  # 黑色字体
+                    )
     
     # 将新文档保存为指定文件名
     new_doc.save(output_pdf)
