@@ -305,13 +305,16 @@ def compress_and_upload(path):
         compress_folder_to_zip(path)
         from feishu.feishu_uplaod import upload_file
         res_text = upload_file(path + ".zip")
-        try:
-            upload_res = json.loads(res_text)
-            if upload_res['msg'] == "Success":
-                message = path + ".zip上传成功"
-                send_message(message)
-        except:
-            send_message(path + ".zip上传失败:" + res_text)
+        for i in range(3):
+            try:
+                upload_res = json.loads(res_text)
+                if upload_res['msg'] == "Success":
+                    message = path + ".zip上传成功1"
+                    send_message(message)
+                    break
+            except:
+                send_message(path + ".zip上传失败:" + res_text)
+        
 if __name__ == '__main__':
     # test_path = r"C:\Users\Administrator\Downloads\FBA18Y2KCJDH_v4\6.24北蓉US普船AVP1-1箱随停卷帘灰10-1\6.24北蓉US普船AVP1-1箱随停卷帘灰10-1_temp.pdf"
     # test_path = r"C:\Users\Administrator\Downloads\6.24北蓉US普船XLX6-3箱随停卷帘5\6.24北蓉US普船XLX6-3箱随停卷帘5_temp.pdf"
@@ -353,7 +356,7 @@ if __name__ == '__main__':
                                 traceback.print_exc()
                                 pass
             print(path)
-            compress_and_upload(path)
+            #compress_and_upload(path)
             path_v3 = path.replace("_v2", "_v3")
             path_v4 = path.replace("_v2", "_v4")
             # 复制整个文件夹path到path_v3
@@ -362,7 +365,7 @@ if __name__ == '__main__':
                 shutil.copytree(path, path_v3)
                 import reset_excel
                 reset_excel.run(path_v3)
-                compress_and_upload(path_v3)
+                #compress_and_upload(path_v3)
                 print(f"开始复制{path_v4}")
                 shutil.copytree(path_v3, path_v4)
                 import reset_pdf_v4
