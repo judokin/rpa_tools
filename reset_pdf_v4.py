@@ -163,14 +163,16 @@ def set_sku_pdf_v4(input_pdf):
                     fontsize=8,       # 字体大小
                     color=(0, 0, 0),  # 黑色字体
                 )
-                if len(sku_str) > 30:
+                if len(sku_str) > 30 and not os.path.exists("d://set.txt"):
+                    open("d://set.txt", "w").write("")
                     new_page.insert_text(
                         (x0, y0 + 20),  # 设置插入文本的位置
                         sku_str[30:],
                         fontsize=8,       # 字体大小
                         color=(0, 0, 0),  # 黑色字体
                     )
-    
+                if os.path.exists("d://set.txt"):
+                    os.remove("d://set.txt")
     # 将新文档保存为指定文件名
     new_doc.save(output_pdf)
     print(f"新文件已保存为: {output_pdf}")

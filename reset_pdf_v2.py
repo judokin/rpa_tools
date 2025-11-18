@@ -262,6 +262,8 @@ def set_sku_pdf(input_pdf):
                     color=(0, 0, 0),  # 黑色字体
                 )
                 if len(sku_str) > 30:
+                    print("sku_strsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss", sku_str)
+                    open("d://set.txt", "w").write("")
                     new_page.insert_text(
                         (x0, y0 + 20),  # 设置插入文本的位置
                         sku_str[30:],
@@ -370,4 +372,4 @@ if __name__ == '__main__':
                 shutil.copytree(path_v3, path_v4)
                 import reset_pdf_v4
                 reset_pdf_v4.run(path_v4)
-                compress_and_upload(path_v4)
+                #compress_and_upload(path_v4)
