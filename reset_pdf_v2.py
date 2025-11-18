@@ -372,4 +372,4 @@ if __name__ == '__main__':
                 shutil.copytree(path_v3, path_v4)
                 import reset_pdf_v4
                 reset_pdf_v4.run(path_v4)
-                #compress_and_upload(path_v4)
+                compress_and_upload(path_v4)
