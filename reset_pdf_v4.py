@@ -89,8 +89,8 @@ def set_sku_pdf_v4(input_pdf):
                 #     fontname="Times-Roman",
                 # )
                 
-                text = text.replace(" Rugs ", " Mats ")
-                text = text.replace(" Rug ", " Mat ")
+                text = text.replace("Rugs", " Mats ")
+                text = text.replace("Rug", " Mat ")
                 fontsize = 7
                 color = (0, 0, 0)  # 白色字体
                 fontname = "Times-Roman"
@@ -209,7 +209,7 @@ def run(dir_path):
         set_sku_pdf_v4(pdf_file_name)
 
 if __name__ == '__main__':
-    dir_path = r'C:\Users\Administrator\Desktop\Super Browser\亚马逊-北蓉-北美（子账号）\FBA18ZDSMDTB_v4'
+    dir_path = r'E:\360MoveData\Users\Administrator\Desktop\Super Browser\亚马逊--冬豚（子账号）\FBA19431MGBZ'
     run(dir_path)
 
     
