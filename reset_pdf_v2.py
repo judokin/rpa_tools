@@ -373,3 +373,5 @@ if __name__ == '__main__':
                 import reset_pdf_v4
                 reset_pdf_v4.run(path_v4)
                 compress_and_upload(path_v4)
+                if os.path.exists("d://set.txt"):
+                    os.remove("d://set.txt")

@@ -171,8 +171,7 @@ def set_sku_pdf_v4(input_pdf):
                         fontsize=8,       # 字体大小
                         color=(0, 0, 0),  # 黑色字体
                     )
-                if os.path.exists("d://set.txt"):
-                    os.remove("d://set.txt")
+
     # 将新文档保存为指定文件名
     new_doc.save(output_pdf)
     print(f"新文件已保存为: {output_pdf}")
