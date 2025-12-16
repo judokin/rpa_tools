@@ -34,12 +34,24 @@ def clean_old_files(root_dir, days_old=7):
                 print(f"  Created: {creation_date_str} ({file_age_days:.1f} days ago)")
                 
                 if creation_time < cutoff_time:
-                    try:
-                        os.remove(file_path)
-                        print(f"  [DELETED] File is older than {days_old} days.")
-                        count_deleted += 1
-                    except Exception as e:
-                        print(f"  [ERROR] Could not delete file: {e}")
+                    # Check additional conditions: filename starts with FBA or folder name contains '船'
+                    parent_folder_name = os.path.basename(dirpath)
+                    is_fba_file = filename.startswith("FBA")
+                    is_ship_folder = "船" in parent_folder_name
+                    
+                    if is_fba_file or is_ship_folder:
+                        try:
+                            os.remove(file_path)
+                            reason = []
+                            if is_fba_file: reason.append("filename starts with FBA")
+                            if is_ship_folder: reason.append("folder contains '船'")
+                            print(f"  [DELETED] File is older than {days_old} days AND ({' or '.join(reason)}).")
+                            count_deleted += 1
+                        except Exception as e:
+                            print(f"  [ERROR] Could not delete file: {e}")
+                    else:
+                        print(f"  [KEPT] File is older than {days_old} days but does not match naming criteria (FBA... or folder with '船').")
+                        count_skipped += 1
                 else:
                     print(f"  [KEPT] File is recent.")
                     count_skipped += 1
