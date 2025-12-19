@@ -136,7 +136,8 @@ def get_table_data():
                 # 格式为https://www.tiktok.com/@haleykgubler/video/7461931972605021471
                 link_url = f"""https://www.tiktok.com/{link_item[3].split("/")[-1]}/video/{link_item[1].split("/")[5]}"""
                 print("index=", index, "相等,拼接URL", link_url)
-                reset_fields({"fields": {"视频编码": link_url}}, items['record_id'])
+                reset_fields({"fields": {"rpa实际调价时间": link_url}}, items['record_id'])
+                insert_sql = '''insert ignore into ods_asin_list (asin) values ("");'''
                 break
             # else:
             #     if items['fields']['备注'][0]['text'].find(link_item[2].split(',')[0]) >= 0:

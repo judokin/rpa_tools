@@ -2,7 +2,7 @@ import json
 import feishu.config as fsconfig
 import requests
 import os
-def upload_file(file_path):
+def upload_file(file_path, parent_node = "ReVffyLIal2KuGdpGRNcZNJ0njd"):
     url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
     payload = json.dumps({
     "app_id": fsconfig.app_id,
@@ -26,7 +26,7 @@ def upload_file(file_path):
     files = {
         "file_name": (None, os.path.basename(file_path)),
         "parent_type": (None, "explorer"),
-        "parent_node": (None, "ReVffyLIal2KuGdpGRNcZNJ0njd"), # 文件夹，固定
+        "parent_node": (None, parent_node), # 文件夹，固定
         "size": (None, file_size),
         "file": (os.path.basename(file_path), open(file_path, "rb"))
     }
